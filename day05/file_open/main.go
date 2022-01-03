@@ -12,8 +12,9 @@ func readFromFile1() {
 	fileObj, err := os.Open("./main.go")
 	if err != nil {
 		fmt.Printf("open file failed:%v", err)
+		return
 	}
-	defer fileObj.Close()
+	defer fileObj.Close() //放在判错的err语句后面，防止关闭空的文件句柄
 	// var temp = make([]byte, 128) 读指定长度
 	var temp [128]byte
 	for {
@@ -36,6 +37,7 @@ func readFromFilebyBufio() {
 	fileObj, err := os.Open("./main.go")
 	if err != nil {
 		fmt.Printf("open file failed:%v", err)
+		return
 	}
 	defer fileObj.Close()
 	reader := bufio.NewReader(fileObj)
