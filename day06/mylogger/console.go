@@ -21,33 +21,34 @@ func NewLog(LoggerLevel string) Logger {
 	return Logger{Level}
 }
 
-func log(lv Level, msg string) {
+func log(lv Level, format string, a ...interface{}) {
+	msg := fmt.Sprintf(format, a...)
 	now := time.Now().Format("2006-01-02 15:04:05")
 	funcName, fileName, lineNo := getInfo(3)
 	fmt.Printf("[%s] [%s] [%s:%s:%d] %s\n", now, logstring(lv), fileName, funcName, lineNo, msg)
 }
 
-func (l Logger) Debug(s string) {
+func (l Logger) Debug(format string, a ...interface{}) {
 	if l.LoggerLevel <= DEBUG {
-		log(DEBUG, s)
+		log(DEBUG, format, a...)
 	}
 
 }
 
-func (l Logger) Info(s string) {
+func (l Logger) Info(format string, a ...interface{}) {
 	if l.LoggerLevel <= INFO {
-		log(INFO, s)
+		log(INFO, format, a...)
 	}
 }
 
-func (l Logger) Warning(s string) {
+func (l Logger) Warning(format string, a ...interface{}) {
 	if l.LoggerLevel <= WARNING {
-		log(WARNING, s)
+		log(WARNING, format, a...)
 	}
 }
 
-func (l Logger) Error(s string) {
+func (l Logger) Error(format string, a ...interface{}) {
 	if l.LoggerLevel <= ERROR {
-		log(ERROR, s)
+		log(ERROR, format, a...)
 	}
 }
