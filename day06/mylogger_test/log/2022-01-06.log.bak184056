@@ -1,0 +1,27 @@
+[2022-01-06 18:12:13] [INFO] [main.go:main:25] 这是一条Info日志
+[2022-01-06 18:12:13] [ERROR] [main.go:main:26] 这是一条Error日志
+[2022-01-06 18:12:13] [WARNING] [main.go:main:27] 这是一条Warning日志
+[2022-01-06 18:12:15] [DEBUG] [main.go:main:24] 这是一条Debug日志: id:1510260111, name:beam
+[2022-01-06 18:12:15] [INFO] [main.go:main:25] 这是一条Info日志
+[2022-01-06 18:12:15] [ERROR] [main.go:main:26] 这是一条Error日志
+[2022-01-06 18:12:15] [WARNING] [main.go:main:27] 这是一条Warning日志
+[2022-01-06 18:12:17] [DEBUG] [main.go:main:24] 这是一条Debug日志: id:1510260111, name:beam
+[2022-01-06 18:12:17] [INFO] [main.go:main:25] 这是一条Info日志
+[2022-01-06 18:12:17] [ERROR] [main.go:main:26] 这是一条Error日志
+[2022-01-06 18:12:17] [WARNING] [main.go:main:27] 这是一条Warning日志
+[2022-01-06 18:12:19] [DEBUG] [main.go:main:24] 这是一条Debug日志: id:1510260111, name:beam
+[2022-01-06 18:12:19] [INFO] [main.go:main:25] 这是一条Info日志
+[2022-01-06 18:12:19] [ERROR] [main.go:main:26] 这是一条Error日志
+[2022-01-06 18:12:19] [WARNING] [main.go:main:27] 这是一条Warning日志
+[2022-01-06 18:12:21] [DEBUG] [main.go:main:24] 这是一条Debug日志: id:1510260111, name:beam
+[2022-01-06 18:12:21] [INFO] [main.go:main:25] 这是一条Info日志
+[2022-01-06 18:12:21] [ERROR] [main.go:main:26] 这是一条Error日志
+[2022-01-06 18:12:21] [WARNING] [main.go:main:27] 这是一条Warning日志
+[2022-01-06 18:40:52] [DEBUG] [main.go:main:24] 这是一条Debug日志: id:1510260111, name:beam
+[2022-01-06 18:40:52] [INFO] [main.go:main:25] 这是一条Info日志
+[2022-01-06 18:40:52] [ERROR] [main.go:main:26] 这是一条Error日志
+[2022-01-06 18:40:52] [WARNING] [main.go:main:27] 这是一条Warning日志
+[2022-01-06 18:40:54] [DEBUG] [main.go:main:24] 这是一条Debug日志: id:1510260111, name:beam
+[2022-01-06 18:40:54] [INFO] [main.go:main:25] 这是一条Info日志
+[2022-01-06 18:40:54] [ERROR] [main.go:main:26] 这是一条Error日志
+[2022-01-06 18:40:54] [WARNING] [main.go:main:27] 这是一条Warning日志
