@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -19,6 +20,7 @@ type RedisConfig struct {
 	Port     int    `ini:"port"`
 	Password string `ini:"password"`
 	Database int    `ini:"database"`
+	Test     bool   `ini:"test"`
 }
 type Config struct {
 	MysqlConfig `ini:"mysql"`
@@ -47,6 +49,9 @@ func loadIni(fileName string, data interface{}) (err error) {
 	var structName string
 	for idx, line := range lineSlice {
 		line = strings.TrimSpace(line)
+		if len(line) == 0 {
+			continue
+		}
 		if strings.HasPrefix(line, ";") || strings.HasPrefix(line, "#") {
 			continue
 		}
@@ -65,17 +70,66 @@ func loadIni(fileName string, data interface{}) (err error) {
 				field := t.Elem().Field(i)
 				if sectionName == field.Tag.Get("ini") {
 					structName = field.Name
-
-					fmt.Printf("找到%s对应的嵌套结构体%s", sectionName, structName)
+					fmt.Printf("找到%s对应的嵌套结构体%s\n", sectionName, structName)
 				}
 			}
-
 		} else {
-
+			if strings.Index(line, "=") == -1 || strings.HasPrefix(line, "=") {
+				err = fmt.Errorf("line:%d syntax error", idx+1)
+				return err
+			}
+			index := strings.Index(line, "=")
+			key := strings.TrimSpace(line[:index])
+			value := strings.TrimSpace(line[index+1:])
+			v := reflect.ValueOf(data)
+			sValue := v.Elem().FieldByName(structName)
+			sType := sValue.Type()
+			if sType.Kind() != reflect.Struct {
+				err := fmt.Errorf("data中的%s字段应该是一个结构体", structName)
+				return err
+			}
+			var fieldName string
+			var fileType reflect.StructField
+			for i := 0; i < sValue.NumField(); i++ {
+				filed := sType.Field(i)
+				fileType = filed
+				if key == filed.Tag.Get("ini") {
+					fieldName = filed.Name
+					break
+				}
+			}
+			if len(fieldName) == 0 {
+				continue
+			}
+			fileObj := sValue.FieldByName(fieldName)
+			fmt.Println(fileName, fileType.Type.Kind())
+			switch fileType.Type.Kind() {
+			case reflect.String:
+				fileObj.SetString(value)
+			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+				valueInt, err := strconv.ParseInt(value, 10, 64)
+				if err != nil {
+					err = fmt.Errorf("line:%d value type error", idx+1)
+					return err
+				}
+				fileObj.SetInt(valueInt)
+			case reflect.Bool:
+				valueBool, err := strconv.ParseBool(value)
+				if err != nil {
+					err = fmt.Errorf("line:%d value type error", idx+1)
+					return err
+				}
+				fileObj.SetBool(valueBool)
+			case reflect.Float32, reflect.Float64, reflect.Kind(fileObj.Float()):
+				valueFloat, err := strconv.ParseFloat(value, 64)
+				if err != nil {
+					err = fmt.Errorf("line:%d value type error", idx+1)
+					return err
+				}
+				fileObj.SetFloat(valueFloat)
+			}
 		}
-
 	}
-
 	return
 }
 
@@ -86,6 +140,6 @@ func main() {
 		fmt.Printf("load ini failed, err:%v\n", err)
 		return
 	}
-	fmt.Println(cfg)
+	fmt.Printf("%#v/n", cfg)
 	// fmt.Println(mc.Address, mc.Port, mc.Username, mc.Password)
 }
