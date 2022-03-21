@@ -82,7 +82,7 @@ func loadIni(fileName string, data interface{}) (err error) {
 			key := strings.TrimSpace(line[:index])
 			value := strings.TrimSpace(line[index+1:])
 			v := reflect.ValueOf(data)
-			sValue := v.Elem().FieldByName(structName)
+			sValue := v.Elem().FieldByName()
 			sType := sValue.Type()
 			if sType.Kind() != reflect.Struct {
 				err := fmt.Errorf("data中的%s字段应该是一个结构体", structName)
